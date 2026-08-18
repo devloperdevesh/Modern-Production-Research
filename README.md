@@ -5,7 +5,7 @@
 [![Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com)
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Rust](https://img.shields.io/badge/rust-performance--core-orange.svg)](https://www.rust-lang.org/)
-[![GitHub Issues](https://shields.io)](https://github.com)
+[![GitHub Issues](https://shields.io)](https://github.com/devloperdevesh/Modern-Production-Research/issues)
 
 MPR is a control-plane runtime for distributed systems that turns runtime telemetry into resilience decisions.
 

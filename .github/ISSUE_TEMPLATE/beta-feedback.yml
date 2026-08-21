@@ -1,0 +1,13 @@
+name: "Enterprise Beta Feedback"
+description: "Submit integration feedback from scale-stage production cluster testbeds."
+title: "[BETA-FEEDBACK]: "
+labels: ["area: documentation", "triage"]
+body:
+  - type: textarea
+    id: ingestion_load
+    attributes:
+      label: "Cluster Ingestion Volume & Performance Benchmarks"
+      description: "Provide the sustained request velocity observed during your integration loop."
+      placeholder: "e.g., Sustained 30,000 requests/sec across 5 distributed nodes."
+    validations:
+      required: true

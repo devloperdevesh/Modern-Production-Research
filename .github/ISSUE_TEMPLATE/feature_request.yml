@@ -1,0 +1,28 @@
+name: "Enterprise Core Primitive Proposal"
+description: "Propose a new low-latency traffic pattern or asynchronous synchronization algorithm."
+title: "[SYS-DESIGN]: "
+labels: ["help wanted", "component: backend-core"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every architectural addition to MPR must pass our zero thread-blocking execution axioms.
+  - type: textarea
+    id: mathematical_model
+    attributes:
+      label: "Algorithmic Abstract & Mathematical Foundation"
+      description: "Detail the lock-free code pattern, token bucket math, or probabilistic equations."
+      placeholder: "Specify formulas like XFetch configurations or sliding window metrics mechanics."
+    validations:
+      required: true
+  - type: dropdown
+    id: architectural_placement
+    attributes:
+      label: "Target Core Framework Placement Layer"
+      options:
+        - "core/concurrency/ (Distributed Locking & Sliding Window Logs)"
+        - "core/resilience/ (Predictive Load Shedding & State Circuit Breaking)"
+        - "src/ (Bare-Metal Rust Async Packet Reactor Core)"
+        - "pkg/ebpf/ (Sub-Kernel Linux XDP Core Driver Hooks)"
+    validations:
+      required: true

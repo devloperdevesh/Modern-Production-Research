@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  mpr-postgres:
+    image: postgres:16-alpine
+    container_name: mpr-postgres
+    environment:
+      POSTGRES_USER: mpr_admin
+      POSTGRES_PASSWORD: mpr_secure_pass
+      POSTGRES_DB: mpr_prod
+    ports:
+      - "5432:5432"
+  mpr-redis:
+    image: redis:7.2-alpine
+    container_name: mpr-redis
+    ports:
+      - "6379:6379"
+  mpr-prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: mpr-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml

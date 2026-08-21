@@ -1,0 +1,38 @@
+name: MPR Automated Welcome Guardian & Triager
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  govern-and-triage:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+    - name: Post Autonomous Structural Directives
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const user = context.payload.issue.user.login;
+          const body = context.payload.issue.body || "";
+          
+          const welcomeMessage = `## Access Granted to MPR Core Labs Architecture, @${user}! ⚡\n\nThank you for executing an entry route into our distributed control plane framework. Your issue has been registered inside our cluster triage ledger.\n\n### Critical Compliance Matrix:\n* **Zero Thread Blocking Required:** Confirm your logic uses non-blocking asynchronous wrappers.\n* **Local Cluster Setup:** Execute \`docker compose -f infra/docker-compose.yml up -d\` to verify benchmarks.\n\nReview our engineering directives detailed inside [CONTRIBUTING.md](https://github.com) to initialize development.`;
+          
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.payload.issue.number,
+            body: welcomeMessage
+          });
+
+          // Dynamic Triaging: Auto-label based on target layer selected in the YAML form
+          if (body.includes("src/") || body.includes("pkg/ebpf/")) {
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              labels: ['component: low-level-kernel', 'difficulty: advanced']
+            });
+          }

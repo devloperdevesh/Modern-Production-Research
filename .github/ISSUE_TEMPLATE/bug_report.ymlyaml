@@ -1,0 +1,31 @@
+name: "Production Defect & Critical Crash"
+description: "Report an active execution freeze, memory leak, or thread-starvation anomaly in MPR."
+title: "[BUG]: "
+labels: ["bug", "component: backend-core", "difficulty: advanced"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Detail the deterministic failure state or system crash logs below. Submissions without operational logs will be automatically stale-closed by our bots.
+  - type: textarea
+    id: environment
+    attributes:
+      label: "System Topology & Environment Specifications"
+      description: "Specify the exact deployment infrastructure footprint."
+      placeholder: "e.g., Python 3.11, Rust Core 1.75, Linux Kernel 6.5, Shared Memory Segment Size"
+    validations:
+      required: true
+  - type: textarea
+    id: trace
+    attributes:
+      label: "Traceback Logs & P99 Latency Anomaly Dumps"
+      description: "Attach the precise stack trace or Prometheus telemetry profile indicating the bottleneck."
+    validations:
+      required: true
+  - type: checkboxes
+    id: sanitization
+    attributes:
+      label: "Security & Exploit Sanitization Check"
+      options:
+        - label: "I confirm this issue does not leak corporate access keys or cluster authentication tokens."
+          required: true

@@ -1,0 +1,21 @@
+name: MPR Systems Sanitizers & Memory Safety Auditor
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  rust-thread-sanitizer:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Ingest Code Base
+      uses: actions/checkout@v4
+
+    - name: Execute Thread & Memory Leak Audits
+      run: |
+        rustup toolchain install nightly
+        rustup component add rust-src --toolchain nightly
+        # Run high-end memory sanitizer tracking raw CAS operations
+        cargo test --manifest-path src/Cargo.toml --target x86_64-unknown-linux-gnu

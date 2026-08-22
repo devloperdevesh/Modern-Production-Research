@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   validate-and-test:
+    name: validate-and-test
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +24,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
@@ -36,3 +38,7 @@ jobs:
       - name: Run tests
         run: |
           pytest -q
+
+      - name: Check Git diff
+        run: |
+          git diff --check

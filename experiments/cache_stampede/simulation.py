@@ -3,13 +3,15 @@ import random
 import time
 import asyncio
 
+
 class CacheStampedeSimulator:
     """Simulates production systems crashing under validation invalidation waves via XFetch."""
+
     def __init__(self, beta: float = 1.0):
-        self.beta = beta  
+        self.beta = beta
 
     async def mock_heavy_db_query(self) -> float:
-        await asyncio.sleep(0.15) # Simulated 150ms SQL query bottleneck
+        await asyncio.sleep(0.15)  # Simulated 150ms SQL query bottleneck
         return 0.15
 
     async def read_via_xfetch(self, cache_layer: dict, key: str, ttl: float) -> str:

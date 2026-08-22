@@ -1,5 +1,5 @@
-import time
 from typing import Dict, Any, Tuple
+
 
 class DynamicConcurrencyLoadShedder:
     """
@@ -7,12 +7,17 @@ class DynamicConcurrencyLoadShedder:
     Monitors rolling tail latency via Exponential Moving Average (EMA) to execute
     immediate load shedding before downstream thread starvation triggers a host crash.
     """
-    def __init__(self, critical_latency_threshold_secs: float = 0.500, alpha: float = 0.2):
-        self.threshold = critical_latency_threshold_secs
-        self.alpha = alpha  
-        self.rolling_latency_average: float = 0.005  
 
-    async def evaluate_transaction(self, request_metadata: Dict[str, Any]) -> Tuple[bool, str]:
+    def __init__(
+        self, critical_latency_threshold_secs: float = 0.500, alpha: float = 0.2
+    ):
+        self.threshold = critical_latency_threshold_secs
+        self.alpha = alpha
+        self.rolling_latency_average: float = 0.005
+
+    async def evaluate_transaction(
+        self, request_metadata: Dict[str, Any]
+    ) -> Tuple[bool, str]:
         """
         Evaluates system health boundaries. Rejects non-critical traffic during saturation cycles.
         """
@@ -25,4 +30,6 @@ class DynamicConcurrencyLoadShedder:
         """
         Updates the mathematical mathematical moving average distribution trajectory without locks.
         """
-        self.rolling_latency_average = (execution_duration * self.alpha) + (self.rolling_latency_average * (1 - self.alpha))
+        self.rolling_latency_average = (execution_duration * self.alpha) + (
+            self.rolling_latency_average * (1 - self.alpha)
+        )

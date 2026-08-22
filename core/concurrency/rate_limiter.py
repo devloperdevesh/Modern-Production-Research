@@ -1,6 +1,6 @@
 import time
-from typing import Optional
 import redis.asyncio as aioredis
+
 
 class RedisAtomicTokenBucket:
     """
@@ -8,6 +8,7 @@ class RedisAtomicTokenBucket:
     Executes structural token allocation via Lua scripts inside Redis memory space
     to completely eliminate concurrency race conditions under distributed deployment clusters.
     """
+
     def __init__(self, redis_pool: aioredis.Redis):
         self.redis = redis_pool
         self.lua_script = """
@@ -43,7 +44,9 @@ class RedisAtomicTokenBucket:
         """
         self.script_executor = self.redis.register_script(self.lua_script)
 
-    async def evaluate(self, identifier: str, capacity: int, refill_rate: float) -> bool:
+    async def evaluate(
+        self, identifier: str, capacity: int, refill_rate: float
+    ) -> bool:
         """
         Atomically evaluates systemic boundaries for incoming execution streams.
         Returns True if capacity exists, False if threshold breached (Shed Traffic).
@@ -51,7 +54,9 @@ class RedisAtomicTokenBucket:
         key = f"mpr:limiter:{identifier}"
         now = time.time()
         try:
-            result = await self.script_executor(keys=[key], args=[capacity, refill_rate, 1, now])
+            result = await self.script_executor(
+                keys=[key], args=[capacity, refill_rate, 1, now]
+            )
             return bool(result)
         except Exception:
             # Production resilience principle: Fail-Open to secure application uptime

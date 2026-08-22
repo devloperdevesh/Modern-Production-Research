@@ -1,0 +1,46 @@
+name: MPR Contributor Recognition
+
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  pull-requests: write
+
+jobs:
+  recognize:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Recognize merged contributor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const user = pr.user.login;
+
+            const message = [
+              "## 🏆 MPR Contribution Merged",
+              "",
+              `Thank you @${user} for contributing to Modern Production Research.`,
+              "",
+              "Your pull request has been merged into the project.",
+              "",
+              "We appreciate contributions across:",
+              "- distributed systems",
+              "- resilience engineering",
+              "- Rust",
+              "- observability",
+              "- performance engineering",
+              "",
+              "Thanks for helping improve MPR."
+            ].join("\n");
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: message
+            });

@@ -1,0 +1,41 @@
+name: MPR Stale Thread Management
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale-management:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mark inactive issues and pull requests
+        uses: actions/stale@v10
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-stale: 30
+          days-before-close: 7
+
+          stale-issue-message: >
+            This issue has had no activity for 30 days.
+            Please provide an update if the issue is still relevant.
+
+          stale-pr-message: >
+            This pull request has had no activity for 30 days.
+            Please update the implementation or explain the remaining work.
+
+          close-issue-message: >
+            Closing due to prolonged inactivity. Reopen if the issue becomes relevant again.
+
+          close-pr-message: >
+            Closing due to prolonged inactivity. Reopen or submit a refreshed PR when ready.
+
+          stale-issue-label: stale
+          close-issue-label: stale
+          stale-pr-label: stale
+          close-pr-label: stale

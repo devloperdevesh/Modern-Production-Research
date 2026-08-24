@@ -1,0 +1,29 @@
+#!/bin/sh
+# MPR Commit Message Policy
+# Enforces Conventional Commit-style messages.
+
+set -eu
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(sed -n '1p' "$COMMIT_MSG_FILE")
+
+PATTERN='^(feat|fix|docs|style|refactor|perf|test|chore|ci)(\([a-z0-9_-]+\))?!?: .+'
+
+if ! printf '%s\n' "$COMMIT_MSG" | grep -Eq "$PATTERN"; then
+    echo "✗ Commit blocked: invalid commit message."
+    echo
+    echo "Expected:"
+    echo "  <type>(<scope>): <description>"
+    echo
+    echo "Allowed types:"
+    echo "  feat fix docs style refactor perf test chore ci"
+    echo
+    echo "Examples:"
+    echo "  feat(concurrency): add distributed token bucket"
+    echo "  fix(telemetry): correct latency aggregation"
+    echo "  docs(governance): add contribution guidelines"
+    exit 1
+fi
+
+echo "✓ MPR commit message accepted."
+exit 0

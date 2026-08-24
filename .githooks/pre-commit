@@ -1,0 +1,34 @@
+#!/bin/sh
+# MPR Local Quality Gate
+# Fast checks only: linting and formatting validation.
+# Full test execution remains delegated to pre-push and CI.
+
+set -u
+
+echo "→ MPR pre-commit: running Ruff checks..."
+
+if ! command -v ruff >/dev/null 2>&1; then
+    echo "✗ Ruff is not available."
+    echo "  Install dependencies with: pip install -r requirements.txt"
+    exit 1
+fi
+
+ruff check core/ telemetry/ experiments/ tests/
+RUFF_STATUS=$?
+
+if [ "$RUFF_STATUS" -ne 0 ]; then
+    echo "✗ Commit blocked: Ruff validation failed."
+    exit "$RUFF_STATUS"
+fi
+
+ruff format --check core/ telemetry/ experiments/ tests/
+FORMAT_STATUS=$?
+
+if [ "$FORMAT_STATUS" -ne 0 ]; then
+    echo "✗ Commit blocked: formatting validation failed."
+    echo "  Run: ruff format core/ telemetry/ experiments/ tests/"
+    exit "$FORMAT_STATUS"
+fi
+
+echo "✓ MPR pre-commit: quality gates passed."
+exit 0

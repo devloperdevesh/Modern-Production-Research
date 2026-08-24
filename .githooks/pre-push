@@ -1,0 +1,24 @@
+#!/bin/sh
+# MPR Pre-Push Validation Gate
+# Prevents known test regressions from reaching the remote repository.
+
+set -u
+
+echo "→ MPR pre-push: running test suite..."
+
+if ! command -v pytest >/dev/null 2>&1; then
+    echo "✗ pytest is not available."
+    echo "  Install dependencies with: pip install -r requirements.txt"
+    exit 1
+fi
+
+pytest -q
+PYTEST_STATUS=$?
+
+if [ "$PYTEST_STATUS" -ne 0 ]; then
+    echo "✗ Push blocked: test suite failed."
+    exit "$PYTEST_STATUS"
+fi
+
+echo "✓ MPR pre-push: test suite passed."
+exit 0

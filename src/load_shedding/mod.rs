@@ -34,3 +34,5 @@ mod tests {
         assert_eq!(shedder.evaluate(50), Admission::Accept);
     }
 }
+
+pub mod adaptive_shedder;

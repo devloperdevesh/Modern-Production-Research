@@ -20,3 +20,7 @@ harness = false
 [[bench]]
 name = "admission"
 harness = false
+
+[[bench]]
+name = "cache"
+harness = false

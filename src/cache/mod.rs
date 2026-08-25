@@ -69,3 +69,5 @@ mod tests {
         assert_eq!(cache.len(), 1);
     }
 }
+
+pub mod local_cache;

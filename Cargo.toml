@@ -16,3 +16,7 @@ harness = false
 [[bench]]
 name = "concurrency"
 harness = false
+
+[[bench]]
+name = "admission"
+harness = false

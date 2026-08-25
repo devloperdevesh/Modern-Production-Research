@@ -61,3 +61,5 @@ mod tests {
         assert!(limiter.try_acquire());
     }
 }
+
+pub mod semaphore;

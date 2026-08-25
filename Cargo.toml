@@ -12,3 +12,7 @@ criterion = "0.5"
 [[bench]]
 name = "rate_limit"
 harness = false
+
+[[bench]]
+name = "concurrency"
+harness = false

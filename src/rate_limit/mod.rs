@@ -1,3 +1,5 @@
+pub mod token_bucket;
+
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
 

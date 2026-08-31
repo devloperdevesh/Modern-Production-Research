@@ -181,3 +181,24 @@ MPR is under active development. The current focus is validating distributed res
 ## License
 
 Apache License 2.0. See [LICENSE](https://github.com).
+
+## Enterprise Ingestion & Host Installation
+
+To deploy the asynchronous resilience runtime onto a bare-metal or cloud host:
+
+```bash
+git clone https://github.com/devloperdevesh/Modern-Production-Research.git
+cd Modern-Production-Research
+chmod +x install.sh
+./install.sh
+```
+
+### Local Module Integration
+
+Once setup completes, application integrations can register the relevant runtime components through their package interfaces.
+
+```python
+from core.concurrency.rate_limiter import RedisAtomicTokenBucket
+from core.resilience.load_shedder import DynamicConcurrencyLoadShedder
+```
+
